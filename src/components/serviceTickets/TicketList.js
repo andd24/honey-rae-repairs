@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useHistory } from "react"
 
 export const TicketList = () => {
     const [tickets, getTickets] = useState([])
+    const [active, setActive] = useState("")
+    const history = useHistory()
 
     useEffect(
         () => {
@@ -12,8 +14,18 @@ export const TicketList = () => {
                 })
         }, [])
 
+    useEffect(() => {
+        const activeTicketCount = tickets.filter(t => t.dateCompleted === "").length
+        setActive(`There are ${activeTicketCount} open tickets`)
+    }, [tickets])
+
     return (
         <>
+
+<div>
+    <button onClick={() => history.push("/ticket/create")}>Create Ticket</button>
+</div>
+        { active }
             {
                 tickets.map(
                     (ticket) => {
