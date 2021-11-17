@@ -1,11 +1,12 @@
-import React, { useState, useHistory } from "react"
+import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 
 export const TicketForm = () => {
     const [ticket, updateTicket] = useState({
         description: "",
         emergency: false
     })
-    const history = useHistory
+    const history = useHistory()
     const saveTicket = (event) => {
         event.preventDefault()
         const newTicket = {
@@ -26,7 +27,7 @@ export const TicketForm = () => {
 
         return fetch("http://localhost:8088/serviceTickets", fetchOption)
             .then(() => {
-                history.pushState("/tickets")
+                history.push("/tickets")
             })
 
     }
