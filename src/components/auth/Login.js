@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom"
+import { GetCustomerEmails } from "../apiManager";
 import "./Login.css"
 
 export const Login = () => {
@@ -9,8 +10,7 @@ export const Login = () => {
     const history = useHistory()
 
     const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/customers?email=${email}`)
-            .then(res => res.json())
+        return GetCustomerEmails()
             .then(user => user.length ? user[0] : false)
     }
 

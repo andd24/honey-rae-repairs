@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams, useHistory } from "react-router-dom"
+import { getEmployees, getTicketById } from "../apiManager"
 
 export const Ticket = () => {
     const [ticket, assignTicket] = useState({})  // State variable for current ticket object
@@ -11,8 +12,7 @@ export const Ticket = () => {
     // Fetch the individual ticket when the parameter value changes
     useEffect(
         () => {
-            return fetch(`http://localhost:8088/serviceTickets/${ticketId}?_expand=customer&_expand=employee`)
-                .then(response => response.json())
+            return getTicketById()
                 .then((data) => {
                     assignTicket(data)
                 })
@@ -24,8 +24,7 @@ export const Ticket = () => {
     // Fetch all employees
     useEffect(
         () => {
-            fetch(`http://localhost:8088/employees`)
-                .then(res => res.json())
+            getEmployees()
                 .then(syncEmployees)
         },
         []  // Empty dependency array only reacts to JSX initial rendering
