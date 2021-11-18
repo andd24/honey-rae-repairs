@@ -32,8 +32,6 @@ export const TicketForm = () => {
 
     }
 
-  
-
     return (
         <form className="ticketForm">
             <h2 className="ticketForm__title">New Service Ticket</h2>
@@ -53,19 +51,6 @@ export const TicketForm = () => {
                         className="form-control"
                         placeholder="Brief description of problem"
                         />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="name">Emergency:</label>
-                    <input type="checkbox"
-                        onChange={
-                            (evt) => {
-                                const copy = {...ticket}
-                                copy.emergency = evt.target.checked
-                                updateTicket(copy)
-                            }
-                        } />
                 </div>
             </fieldset>
             <button className="btn btn-primary" onClick={saveTicket}>

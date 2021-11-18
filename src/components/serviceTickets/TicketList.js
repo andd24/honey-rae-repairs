@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import "./Tickets.css"
 
 export const TicketList = () => {
@@ -7,13 +7,25 @@ export const TicketList = () => {
     const [active, setActive] = useState("")
     const history = useHistory()
 
+    const fetchTickets = () => {
+        fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer")
+        .then(res => res.json())
+        .then((data) => {
+            getTickets(data)
+        })
+    }
+
     useEffect(() => {
-            fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer")
-                .then(res => res.json())
-                .then((data) => {
-                    getTickets(data)
-                })
+        fetchTickets()
         }, [])
+
+    const deleteTicket = (id) => {
+        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+            method: "DELETE"
+        })
+        fetchTickets()
+    }
+        
 
     useEffect(() => {
         const activeTicketCount = tickets.filter(t => t.dateCompleted === "").length
@@ -30,9 +42,11 @@ export const TicketList = () => {
                 tickets.map(
                     (ticket) => {
                         return <p className={`ticket`} class= {ticket.emergency ? "emergency" : "nonemergency"}>
-                        {ticket.emergency ? "🚑" : ""} {ticket.description} submitted by {ticket.customer.name} and worked on by {ticket.employee.name}
-                    </p>
+                        {ticket.emergency ? "🚑" : ""} <Link to={`/tickets/${ticket.id}`}>{ticket.description}</Link>
+                        submitted by {ticket.customer.name} and worked on by {ticket.employee.name}
+                        <button onClick={() => {deleteTicket(ticket.id)}}>Delete</button></p> 
                     
             })}
+
         </>
 )}
