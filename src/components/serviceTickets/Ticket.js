@@ -12,7 +12,8 @@ export const Ticket = () => {
     // Fetch the individual ticket when the parameter value changes
     useEffect(
         () => {
-            return getTicketById()
+            const res = await fetch(`http://localhost:8088/serviceTickets/${ticketId}?_expand=customer&_expand=employee`)
+            return await res.json()
                 .then((data) => {
                     assignTicket(data)
                 })

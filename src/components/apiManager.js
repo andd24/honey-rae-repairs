@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useParams } from "react-router"
 
 export const getAllCustomers = async () => {
     const res = await fetch("http://localhost:8088/customers")
@@ -11,7 +12,8 @@ export const GetCustomerEmails = async () => {
     return await res.json()
 }
 
-export const getEmployeeById = async () => {
+export const GetEmployeeById = async () => {
+    const { employeeId } = useParams()
     const res = await fetch(`http://localhost:8088/employees/${employeeId}`)
     return await res.json()
 }
@@ -22,6 +24,7 @@ export const getEmployees = async () => {
 }
 
 export const getTicketById = async () => {
+    const { ticketId } = useParams() 
     const res = await fetch(`http://localhost:8088/serviceTickets/${ticketId}?_expand=customer&_expand=employee`)
     return await res.json()
 }

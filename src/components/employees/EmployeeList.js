@@ -7,8 +7,7 @@ export const EmployeeList = () => {
     const [employeeSpecialtyList, setSpecialtyList] = useState("")
     const history = useHistory()
 
-    useEffect(
-        () => {
+    useEffect(() => {
             getEmployees()
                 .then((data) => {
                     changeEmployee(data)
